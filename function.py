@@ -9,6 +9,9 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 wall = pygame.image.load("wall.bmp")
+start = pygame.image.load("start.bmp")
+
+
 
 def draw_rect(window, color, x, y):
     pygame.draw.rect(window, color, [x, y, 30, 30])
@@ -59,6 +62,8 @@ def draw_grille(window, grille):
         for case in ligne:
             if case == 0:
                 draw_wall(window, x, y)
+            elif case == 2:
+                draw_start(window, x, y)
             x = x + 30
         x = 0
         y = y + 30
@@ -66,26 +71,31 @@ def draw_grille(window, grille):
 def draw_wall(window, x, y):
     window.blit(wall, (x, y))
 
+def draw_start(window, x, y):
+    window.blit(start, (x, y))
 
-def draw_random_grille(window, grille):
-    grille = clear_grille(grille)
+
+class Player():
+    def __init__(self):
+        self.image_player = pygame.image.load("macgyver.bmp")
+        self.image_player.set_colorkey(WHITE)
+        self.coord_player = [30, 30]
+
+    def generate_player(self, window):
+        window.blit(self.image_player, (self.coord_player[0], self.coord_player[1]))
+
+    def move_player(self, window, x, y):
+        self.coord_player[0] = self.coord_player[0] + x
+        self.coord_player[1] = self.coord_player[1] + y
+        self.generate_player(window)
+
+
+def draw_random_grille(window):
+    [ligne_1, ligne_2, ligne_3, ligne_4, ligne_5, ligne_6, ligne_7, ligne_8, ligne_9, ligne_10, ligne_11, ligne_12, ligne_13, ligne_14, ligne_15] = [[] for i in range(15)]
+    grille = [ligne_1, ligne_2, ligne_3, ligne_4, ligne_5, ligne_6, ligne_7, ligne_8, ligne_9, ligne_10, ligne_11, ligne_12, ligne_13, ligne_14, ligne_15]
+
     for ligne in grille:
         while len(ligne) <= 15 :
             x = random.randint(0, 1)
             ligne.append(x)
     draw_grille(window, grille)   
-
-def clear_grille(grille):
-    for ligne in grille:
-        ligne.clear()
-    return grille
-
-class Case:
-    def __init__(window):
-        self.image = None
-        self.wall = True # or false for way
-        self.coord = (0, 0)
-        self.height = 30 # hauteur
-        self.width = 30 # Largeur
-        self.window = window
-
