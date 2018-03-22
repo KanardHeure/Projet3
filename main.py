@@ -25,6 +25,8 @@ func.draw_grille(window, grille2)
 
 player = func.Player()
 player.generate_player(window)
+coord_item = func.pop_items(grille2)
+func.draw_item(window, coord_item)
 
 while game:
     for event in pygame.event.get():
@@ -33,6 +35,7 @@ while game:
         elif event.type == pygame.KEYDOWN:
             window.blit(background, (0, 0))
             func.draw_grille(window, grille2)
+            func.draw_item(window, coord_item)
             if event.key == K_RIGHT:
                 print("droite")
                 player.move_player(window, 30, 0, grille2)

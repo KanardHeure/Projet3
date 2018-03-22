@@ -10,6 +10,9 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 wall = pygame.image.load("wall.bmp")
 start = pygame.image.load("start.bmp")
+aiguille = pygame.image.load("aiguille.bmp")
+aiguille.set_colorkey(WHITE)
+
 
 
 
@@ -73,6 +76,25 @@ def draw_wall(window, x, y):
 
 def draw_start(window, x, y):
     window.blit(start, (x, y))
+
+def draw_item(window, coord):
+    window.blit(aiguille, coord)
+
+def pop_items(grille):
+    liste_chemin = []
+    x = 0
+    y = 0
+    for liste in grille:
+        for case in liste:
+            if case == 1:
+                liste_chemin.append((x, y))
+            x = x + 30
+        x = 0
+        y = y + 30
+    index = random.randint(0, len(liste_chemin))
+    return liste_chemin[index]
+
+
 
 
 class Player():
