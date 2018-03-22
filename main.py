@@ -35,16 +35,16 @@ while game:
             func.draw_grille(window, grille2)
             if event.key == K_RIGHT:
                 print("droite")
-                player.move_player(window, 30, 0)
+                player.move_player(window, 30, 0, grille2)
             elif event.key == K_LEFT:
                 print("gauche")
-                player.move_player(window, -30, 0)
+                player.move_player(window, -30, 0, grille2)
             elif event.key == K_UP:
                 print("haut")
-                player.move_player(window, 0, -30)
+                player.move_player(window, 0, -30, grille2)
             elif event.key == K_DOWN:
                 print("bas")
-                player.move_player(window, 0, 30)
+                player.move_player(window, 0, 30, grille2)
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             window.blit(background, (0, 0))

@@ -84,10 +84,33 @@ class Player():
     def generate_player(self, window):
         window.blit(self.image_player, (self.coord_player[0], self.coord_player[1]))
 
-    def move_player(self, window, x, y):
+    def move_player(self, window, x, y, grille):
         self.coord_player[0] = self.coord_player[0] + x
         self.coord_player[1] = self.coord_player[1] + y
+        if self.coord_player[0] < 0:
+            self.coord_player[0] = 0
+        if self.coord_player[1] < 0:
+            self.coord_player[1] = 0
+        if self.coord_player[0] > 420:
+            self.coord_player[0] = 420
+        if self.coord_player[1] > 420:
+            self.coord_player[1] = 420           
+
+        wall = check_wall(grille, self.coord_player)
+        if wall:
+            self.coord_player[0] = self.coord_player[0] - x
+            self.coord_player[1] = self.coord_player[1] - y
+
         self.generate_player(window)
+
+def check_wall(grille, coord):
+    index_ligne = int(coord[0] / 30)
+    index_colomn = int(coord[1] / 30)
+    if grille[index_colomn][index_ligne] == 0:
+        return True
+    else:
+        return False
+
 
 
 def draw_random_grille(window):
