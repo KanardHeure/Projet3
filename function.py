@@ -8,12 +8,14 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
-wall = pygame.image.load("wall.bmp")
-start = pygame.image.load("start.bmp")
-aiguille = pygame.image.load("aiguille.bmp")
+wall = pygame.image.load("Pictures/wall.bmp")
+start = pygame.image.load("Pictures/start.bmp")
+aiguille = pygame.image.load("Pictures/aiguille.bmp")
+tube = pygame.image.load("Pictures/tube.bmp")
+ether = pygame.image.load("Pictures/ether.bmp")
+ether.set_colorkey(WHITE)
 aiguille.set_colorkey(WHITE)
-
-
+tube.set_colorkey(WHITE)
 
 
 def draw_rect(window, color, x, y):
@@ -77,8 +79,13 @@ def draw_wall(window, x, y):
 def draw_start(window, x, y):
     window.blit(start, (x, y))
 
-def draw_item(window, coord):
-    window.blit(aiguille, coord)
+def draw_item(window, item_aiguille, item_tube, item_ether):
+    if item_aiguille[1] == True :
+        window.blit(aiguille, item_aiguille[0])
+    if item_tube[1] == True :
+        window.blit(tube, item_tube[0])
+    if item_ether[1] == True :
+        window.blit(ether, item_ether[0])
 
 def pop_items(grille):
     liste_chemin = []
@@ -91,15 +98,21 @@ def pop_items(grille):
             x = x + 30
         x = 0
         y = y + 30
-    index = random.randint(0, len(liste_chemin))
-    return liste_chemin[index]
-
+    index = random.randint(0, (len(liste_chemin) - 1))
+    coord_aiguille = liste_chemin[index]
+    del liste_chemin[index]
+    index = random.randint(0, (len(liste_chemin) - 1))
+    coord_tube = liste_chemin[index]
+    del liste_chemin[index]
+    index = random.randint(0, (len(liste_chemin) - 1))
+    coord_ether = liste_chemin[index]
+    return coord_aiguille, coord_tube, coord_ether
 
 
 
 class Player():
     def __init__(self):
-        self.image_player = pygame.image.load("macgyver.bmp")
+        self.image_player = pygame.image.load("Pictures/macgyver.bmp")
         self.image_player.set_colorkey(WHITE)
         self.coord_player = [30, 30]
 
@@ -124,6 +137,60 @@ class Player():
             self.coord_player[1] = self.coord_player[1] - y
 
         self.generate_player(window)
+
+class Item():
+    def __init__(self):
+        self.image_aiguille = pygame.image.load("Pictures/aiguille.bmp")
+        self.image_tube = pygame.image.load("Pictures/tube.bmp")
+        self.image_ether = pygame.image.load("Pictures/ether.bmp")
+        self.image_ether.set_colorkey(WHITE)  
+        self.image_aiguille.set_colorkey(WHITE)
+        self.image_tube.set_colorkey(WHITE)
+        self.aiguille = [self.image_aiguille, True]
+        self.tube = [self.image_tube, True]
+        self.ether = [self.image_ether, True]
+
+    def generate_item(self, window, grille):
+        liste_chemin = []
+        x = 0
+        y = 0
+        for liste in grille:
+            for case in liste:
+                if case == 1:
+                    liste_chemin.append((x, y))
+                x = x + 30
+            x = 0
+            y = y + 30
+        index = random.randint(0, (len(liste_chemin) - 1))
+        self.coord_aiguille = liste_chemin[index]
+        del liste_chemin[index]
+        index = random.randint(0, (len(liste_chemin) - 1))
+        self.coord_tube = liste_chemin[index]
+        del liste_chemin[index]
+        index = random.randint(0, (len(liste_chemin) - 1))
+        self.coord_ether = liste_chemin[index]
+        self.aiguille.append(self.coord_aiguille)
+        self.tube.append(self.coord_tube)
+        self.ether.append(self.coord_ether)
+        self.draw_item(window)
+
+    def draw_item(self, window):
+        if self.aiguille[1] == True :
+            window.blit(self.aiguille[0], self.aiguille[2])
+        if self.tube[1] == True :
+            window.blit(self.tube[0], self.tube[2])
+        if self.ether[1] == True :
+            window.blit(self.ether[0], self.ether[2])
+
+    def check_item(self, coord_player):
+        if coord_player == self.aiguille[2]:
+            self.aiguille[1] = False
+        if coord_player == self.tube[2]:
+            self.tube[1] = False
+        if coord_player == self.ether[2]:
+            self.ether[1] = False
+
+
 
 def check_wall(grille, coord):
     index_ligne = int(coord[0] / 30)
