@@ -38,19 +38,19 @@ while game:
             func.draw_grille(window, grille)
 
             if event.key == K_RIGHT:
-                print("droite")
-                player.move_player(window, 30, 0, grille)
+                player.move_player(window, 30, 0, grille, item.win)
             elif event.key == K_LEFT:
-                print("gauche")
-                player.move_player(window, -30, 0, grille)
+                player.move_player(window, -30, 0, grille, item.win)
             elif event.key == K_UP:
-                print("haut")
-                player.move_player(window, 0, -30, grille)
+                player.move_player(window, 0, -30, grille, item.win)
             elif event.key == K_DOWN:
-                print("bas")
-                player.move_player(window, 0, 30, grille)
-            item.check_item((player.coord_player[0],player.coord_player[1]))
-            item.draw_item(window)
+                player.move_player(window, 0, 30, grille, item.win)
+
+            if player.wins == False:
+                item.check_item((player.coord_player[0],player.coord_player[1]))
+                item.draw_item(window)
+            if player.wins == True:
+                game = False
 
     pygame.display.flip()
 

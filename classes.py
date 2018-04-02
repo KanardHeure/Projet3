@@ -20,6 +20,7 @@ class Item():
         self.aiguille = [self.image_aiguille, True]
         self.tube = [self.image_tube, True]
         self.ether = [self.image_ether, True]
+        self.win = False
 
     def generate_item(self, window, grille):
         liste_chemin = []
@@ -66,17 +67,25 @@ class Item():
             self.tube[1] = False
         if coord_player == self.ether[2]:
             self.ether[1] = False
+        self.win_lose()
+
+    def win_lose(self):
+        if self.aiguille[1] == False and self.tube[1] == False and self.ether[1] == False :
+            self.win = True
+        else :
+            self.win = False
 
 class Player():
     def __init__(self):
         self.image_player = pygame.image.load("Pictures/Mcgyver.bmp")
         self.image_player.set_colorkey(WHITE)
         self.coord_player = [30, 30]
+        self.wins = False
 
     def generate_player(self, window):
         window.blit(self.image_player, (self.coord_player[0], self.coord_player[1]))
 
-    def move_player(self, window, x, y, grille):
+    def move_player(self, window, x, y, grille, win):
         self.coord_player[0] = self.coord_player[0] + x
         self.coord_player[1] = self.coord_player[1] + y
         if self.coord_player[0] < 0:
@@ -93,5 +102,15 @@ class Player():
         if grille[index_colomn][index_ligne] == 0 :
             self.coord_player[0] = self.coord_player[0] - x
             self.coord_player[1] = self.coord_player[1] - y
+        elif grille[index_colomn][index_ligne] == 3 :
+            self.coord_player[0] = self.coord_player[0] - x
+            self.coord_player[1] = self.coord_player[1] - y
+
+            if win == True:
+                self.wins = True
+                print("Vous avez gagné")
+            else:
+                self.wins = True
+                print("Vous avez perdu")
 
         self.generate_player(window)
