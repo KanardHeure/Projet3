@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Sublime Text
+projet_3.sublime-project
+projet_3.sublime-workspace
+
+# Other
+/Pictures

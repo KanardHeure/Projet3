@@ -1,33 +1,33 @@
 # -*- coding:Utf-8 -*-
 import pygame
 from pygame.locals import *
-import function as func
 import random
 import json
 
+import function as func
+import classes
 
 pygame.init()
-
-size = (550 , 450)
 
 pygame.display.set_caption("Projet 3: Aide Mc Gyver")
 background = pygame.image.load("Pictures/Background.bmp")
 cote = pygame.image.load("Pictures/font_cote.bmp")
+
+size = (550 , 450)
 window = pygame.display.set_mode(size)
 window.blit(background, (0, 0))
 window.blit(cote, (450, 0))
 
 grille = json.load(open("grille.json"))
 
-
-game = True
 func.draw_grille(window, grille)
 
-player = func.Player()
+player = classes.Player()
 player.generate_player(window)
-item = func.Item()
+item = classes.Item()
 item.generate_item(window, grille)
 
+game = True
 
 while game:
     for event in pygame.event.get():
