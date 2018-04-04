@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # -*- coding:Utf-8 -*-
 import pygame
 
@@ -10,8 +11,6 @@ garde.set_colorkey(WHITE)
 def draw_grille(window, grille):
     x = 0
     y = 0
-    i = 0
-    j = 0
     for ligne in grille:
         for case in ligne:
             if case == 0:

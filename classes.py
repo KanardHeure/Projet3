@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # -*- coding:Utf-8 -*-
 import json
 import random
@@ -5,6 +6,8 @@ import pygame
 from pygame.locals import *
 
 WHITE = (255, 255, 255)
+image_win = pygame.image.load("Pictures/win.bmp")
+image_lose = pygame.image.load("Pictures/lose.bmp")
 
 class Item():
     def __init__(self):
@@ -108,9 +111,9 @@ class Player():
 
             if win == True:
                 self.wins = True
-                print("Vous avez gagné")
+                window.blit(image_win, (0, 150))
             else:
                 self.wins = True
-                print("Vous avez perdu")
+                window.blit(image_lose, (0, 150))
 
         self.generate_player(window)
