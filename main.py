@@ -1,15 +1,17 @@
 #! /usr/bin/env python3
 # -*- coding:Utf-8 -*-
-import pygame
-from pygame.locals import *
+""" Fichier principal """
 import json
 import time
+import pygame
+from pygame.locals import *
 
 import function as func
 import classes
 
 
 def main():
+    """ Fonction principal du programme """
 
     pygame.init()
 
@@ -17,7 +19,7 @@ def main():
     background = pygame.image.load("Pictures/Background.bmp")
     cote = pygame.image.load("Pictures/font_cote.bmp")
 
-    size = (550 , 450)
+    size = (550, 450)
     window = pygame.display.set_mode(size)
     window.blit(background, (0, 0))
     window.blit(cote, (450, 0))
@@ -38,9 +40,9 @@ def main():
             if event.type == pygame.QUIT:
                 game = False
             elif event.type == pygame.KEYDOWN:
-                window.blit(background, (0, 0))            
+                window.blit(background, (0, 0))
                 func.draw_grille(window, grille)
-    
+
                 if event.key == K_RIGHT:
                     player.move_player(window, 30, 0, grille, item.win)
                 elif event.key == K_LEFT:
@@ -49,19 +51,19 @@ def main():
                     player.move_player(window, 0, -30, grille, item.win)
                 elif event.key == K_DOWN:
                     player.move_player(window, 0, 30, grille, item.win)
-    
-                if player.wins == False:
-                    item.check_item((player.coord_player[0],player.coord_player[1]))
+
+                if player.wins is False:
+                    item.check_item((player.coord_player[0], player.coord_player[1]))
                     item.draw_item(window)
-                if player.wins == True:
+                if player.wins is True:
                     game = False
-    
+
         pygame.display.flip()
-    
+
     time.sleep(3)
     pygame.quit()
 
 if __name__ == "__main__":
     main()
-else :
+else:
     print("Se script n'est pas fait pour être importé")
